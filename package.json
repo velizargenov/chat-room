@@ -1,0 +1,23 @@
+{
+  "name": "mentoring",
+  "version": "1.0.0",
+  "description": "Mentoring session",
+  "main": "app/app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/velizargenov/mentoring.git"
+  },
+  "author": "Velizar Genov",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/velizargenov/mentoring/issues"
+  },
+  "homepage": "https://github.com/velizargenov/mentoring#readme",
+  "dependencies": {
+    "express": "^4.13.3",
+    "socket.io": "^1.3.7"
+  }
+}
