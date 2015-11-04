@@ -1,0 +1,102 @@
+// lessc styles.less styles.css
+.content-show {
+  display: block !important;
+}
+
+
+.username-wrapper {
+  border-bottom: 0;
+  width: 598px;
+  height: 50px;
+  margin: 0 auto;
+  padding-top: 100px;
+  .label {
+    display: inline-block;
+    // padding-left: 103px;
+  }
+  .error {
+    color: red;
+  }
+  .user-summery {
+    display: none;
+  }
+  #set-username {
+    display: inline-block;
+    // padding-left: 100px;
+    #nickname {
+      color: blue;
+    }
+    input[type=button] {
+
+    }
+  }
+} // End .username-wrapper
+
+
+.content-wrapper {
+  min-height: 30px;
+  max-width: 598px;
+  margin: 0 auto;
+  overflow: hidden;
+  display: none;
+  .chat-wrapper {
+    width: 596px;
+    min-height: 300px;
+    border: 1px solid black;
+  }
+  .chat-header {
+    width: 100%;
+    height: 30px;
+    padding-top: 6px;
+    border-bottom: 1px solid black;
+    overflow: hidden;
+  }
+  .chat-close, .chat-minimize {
+    float: right;
+  }
+  .chat-header-common {
+    width:auto;
+    height:auto;
+    margin-right: 8px;
+    cursor: pointer;
+  }
+  #messages {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    max-height: 330px;
+    height: 330px;
+    overflow: scroll;
+    > li {
+      padding: 5px 10px;
+    }
+    > li:nth-child(odd) {
+      background: #eee;
+    }
+  }
+  #message-form {
+    background: #737E86;
+    width: 100%;
+    overflow: hidden;
+    #msg {
+      width: 70%;
+      padding: 5px;
+    }
+    > button {
+      height: 27px;
+      padding: 0;
+      margin: 0;
+      width: 157px;
+      cursor: pointer;
+      text-transform: uppercase;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+  .users {
+
+  }
+} // End .content-wrapper

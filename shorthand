@@ -1,0 +1,20 @@
+// 1. Setting up server app.js
+var express = require('express');
+var app = express();
+var server = require('http').Server(app);
+var io = require('socket.io')(server);
+
+// Content comes in here
+
+server.listen(8080, function() {
+  console.log('listening on port: 8080');
+});
+
+
+
+// 2. index.xhtml
+
+
+
+// 3. client.js
+var socket = io.connect('http://localhost:8080');
