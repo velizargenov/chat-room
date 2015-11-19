@@ -5,7 +5,7 @@ var io = require('socket.io')(server);
 var nicknames = [];
 
 // Route to
-app.use(express.static(__dirname + '/client'));
+app.use(express.static(__dirname + './../dist'));
 
 // Receive message
 io.on('connection', function (socket) {
@@ -27,9 +27,13 @@ io.on('connection', function (socket) {
   // Send message
   socket.on('message', function (data) {
     console.log('message: ' + data)
-    socket.broadcast.emit('message', data);
-    // socket.emit('message', {msg: data, nick: socket.nickname})
-    // socket.broadcast.emit('message', {msg: data, nick: socket.nickname});
+    socket.broadcast.emit('message', {msg: data, nick: socket.nickname});
+  });
+
+  // User Typing
+  socket.on("sender", function (data) {
+    socket.emit("sender", data);
+    socket.broadcast.emit("sender", socket.nickname);
   });
 
   // Update nicknames
@@ -48,6 +52,6 @@ io.on('connection', function (socket) {
 
 
 // Server Listen
-server.listen(8080, function() {
-  console.log('listening on port: 8080');
+server.listen(8000, function() {
+  console.log('listening on port: 8000');
 });

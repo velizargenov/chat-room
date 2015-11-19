@@ -1,4 +1,8 @@
-var socket = io.connect('http://localhost:8080');
+require('./styles.less')
+var io = require('socket.io-client');
+var $ = require('jquery');
+
+var socket = io.connect('http://localhost:8000');
 var $message = $('#msg');
 var $messages = $('#messages');
 var $nickForm = $("#set-username");
@@ -6,25 +10,61 @@ var $nickError = $(".error");
 var $nickBox = $("#nickname");
 var $users = $(".users");
 
+alert("asdsad");
 
+
+// User Typing
+$("#msg").on("keyup", function (event) {
+  console.log("1 here")
+  socket.emit("sender", {
+      name: name
+  });
+});
+
+socket.on("sender", function (data) {
+  console.log("2 here")
+  $("#status").html(data + " is typing");
+
+  setTimeout(function () {
+      $("#status").html('');
+  }, 5000);
+});
 socket.on('message', function (data, username) {
   console.log(data);
   console.log("username: ", username)
 });
 
+
 // Set username
 $("#submit-name").on("click", function () {
-  socket.emit('new user', $nickBox.val(), function (data) {
-    if (data) {
-      $('.details-wrapper').hide();
-      $(".content-wrapper, .user-summery").addClass("content-show");
-    }
-    else {
-      $nickError.html('The username is already taken, please try again');
+  // Validation
+  $nickBox.focus(function () {
+    if ($nickBox.hasClass("error")) {
+      $nickBox.removeClass("error");
+      $nickBox.val("");
     }
   });
-  $nickBox.val("");
+  if (!$nickBox.val().match(/\S+@\S+\.\S+/)) {
+    $nickError.text("Please enter a nickname").addClass("error");
+  }
+  console.log("val: ", $nickBox.val())
+  if ($nickBox.val() !== "") {
+    var nameObject = { 'name' : $nickBox.val() };
+    localStorage.setItem('nameObject', JSON.stringify(nameObject)); // store name in localStorage
+    socket.emit('new user', $nickBox.val(), function (data) {
+      if (data) {
+        $('.details-wrapper').hide();
+        $(".content-wrapper, .user-summery").addClass("content-show");
+      }
+      else {
+        $nickError.html('The username is already taken, please try again');
+      }
+    });
+    $nickBox.val("");
+  }
 });
+
+
 
 
 // Display online users
@@ -44,16 +84,18 @@ $('.chat-wrapper').find('form').submit(function () {
   appendMessage(val);
   $message.val('');
   return false;
+
+  // Store nickname locally in order to display
 });
 
 
 // Send message
 socket.on('message', appendMessage);
 function appendMessage(data) {
-  $messages.append($('<li>').text(data));
-  console.log('nick: ', data.nick);
+  var nickObject = localStorage.getItem('nameObject');
+  console.log('nick: ', nickObject);
   console.log('msg: ', data.msg);
-  // $messages.append('<b>' + data.nick + ': </b>' + data.msg);
+  $messages.append($('<li>').html('<b>' + nickObject + ': </b>' + data.msg));
 }
 
 
